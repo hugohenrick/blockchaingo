@@ -23,6 +23,11 @@ func NewBlock(nonce int, previousHash [32]byte, transactions []*Transaction) *Bl
 	return b
 }
 
+func (b *Block) Hash() [32]byte {
+	m, _ := json.Marshal(b)
+	return sha256.Sum256([]byte(m))
+}
+
 func (b *Block) Print() {
 	fmt.Printf("timestamp          %d\n", b.timestamp)
 	fmt.Printf("nonce              %d\n", b.nonce)
@@ -30,11 +35,6 @@ func (b *Block) Print() {
 	for _, t := range b.transactions {
 		t.Print()
 	}
-}
-
-func (b *Block) Hash() [32]byte {
-	m, _ := json.Marshal(b)
-	return sha256.Sum256([]byte(m))
 }
 
 func (b *Block) MarshalJSON() ([]byte, error) {
