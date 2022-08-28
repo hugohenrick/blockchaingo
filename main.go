@@ -20,7 +20,7 @@ func main() {
 	blockchain.Mining()
 	blockchain.Print()
 
-	fmt.Printf("my %.1f\n", blockchain.CalulateTotalAmount(myBlockChainAddress))
-	fmt.Printf("C %.1f\n", blockchain.CalulateTotalAmount("C"))
-	fmt.Printf("D %.1f\n", blockchain.CalulateTotalAmount("D"))
+	fmt.Printf("my %.1f\n", blockchain.CalculateTotalAmount(myBlockChainAddress))
+	fmt.Printf("C %.1f\n", blockchain.CalculateTotalAmount("C"))
+	fmt.Printf("D %.1f\n", blockchain.CalculateTotalAmount("D"))
 }

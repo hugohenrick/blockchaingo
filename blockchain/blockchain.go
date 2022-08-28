@@ -86,7 +86,7 @@ func (bc *Blockchain) Mining() bool {
 	return true
 }
 
-func (bc *Blockchain) CalulateTotalAmount(blockChainAddress string) float64 {
+func (bc *Blockchain) CalculateTotalAmount(blockChainAddress string) float64 {
 	var totalAmount float64 = 0.0
 	for _, b := range bc.chain {
 		for _, t := range b.transactions {
