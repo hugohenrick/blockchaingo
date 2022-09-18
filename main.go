@@ -2,25 +2,34 @@ package main
 
 import (
 	"fmt"
+	"log"
 
-	blockchain "github.com/hugohenrick/blockchaingo/blockchain"
+	"github.com/hugohenrick/blockchaingo/blockchain"
+	"github.com/hugohenrick/blockchaingo/wallet"
 )
 
+func intit() {
+	log.SetPrefix("Blockchain: ")
+}
+
 func main() {
-	myBlockChainAddress := "my_blockchain_address"
-	blockchain := blockchain.NewBlockchain(myBlockChainAddress)
-	blockchain.Print()
+	walletM := wallet.NewWallet()
+	walletA := wallet.NewWallet()
+	walletB := wallet.NewWallet()
 
-	blockchain.AddTransaction("A", "B", 1.0)
+	// Wallet
+	t := wallet.NewTranascation(walletA.PrivateKey(), walletA.PublicKey(), walletA.BlockChainAddress(), walletB.BlockChainAddress(), 1.0)
+
+	// Blockchain
+	blockchain := blockchain.NewBlockchain(walletM.BlockChainAddress())
+	isAdded := blockchain.AddTransaction(walletA.BlockChainAddress(), walletB.BlockChainAddress(), 1.0, walletA.PublicKey(), t.GenerateSiginature())
+
+	fmt.Println("Added? ", isAdded)
+
 	blockchain.Mining()
 	blockchain.Print()
 
-	blockchain.AddTransaction("C", "D", 2.0)
-	blockchain.AddTransaction("X", "Y", 3.0)
-	blockchain.Mining()
-	blockchain.Print()
-
-	fmt.Printf("my %.1f\n", blockchain.CalculateTotalAmount(myBlockChainAddress))
-	fmt.Printf("C %.1f\n", blockchain.CalculateTotalAmount("C"))
-	fmt.Printf("D %.1f\n", blockchain.CalculateTotalAmount("D"))
+	fmt.Printf("Balance A %.1f\n", blockchain.CalculateTotalAmount(walletA.BlockChainAddress()))
+	fmt.Printf("Balance B %.1f\n", blockchain.CalculateTotalAmount(walletB.BlockChainAddress()))
+	fmt.Printf("Balance M %.1f\n", blockchain.CalculateTotalAmount(walletM.BlockChainAddress()))
 }
